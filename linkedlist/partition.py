@@ -2,32 +2,36 @@ from LinkedList import LinkedList
 
 
 def partition(ll, x):
+    smallerHead = smallerTail = largerHead = largerTail = None
     runner = ll.head
-    left = right = None
-    while runner.next:
+    while runner:
         if runner.value < x:
-            if left is None:
-                ll.head = left = runner
+            if smallerHead is None:
+                smallerHead = smallerTail = runner
+                runner = runner.next
             else:
-                left.next = runner
-                if left.next:
-                    left = left.next
-
-        if runner.value >= x:
-            if right is None:
-                right = righthead = runner
+                smallerTail.next = runner
+                smallerTail = runner
+                runner = runner.next
+                smallerTail.next = None
+        else:
+            if largerHead is None:
+                largerHead = largerTail = runner
+                runner = runner.next
             else:
-                right.next = runner
-                right = right.next
-
-        runner = runner.next
-
-    left.next = righthead
+                largerTail.next = runner
+                largerTail = runner
+                runner = runner.next
+                largerTail.next = None
+    if smallerHead is not None:
+        smallerTail.next = largerHead
+        ll.head = smallerHead
+        ll.tail = largerTail
 
 
 
 ll = LinkedList()
-ll.generate(10, 0, 20)
+ll.generate(100, 0, 20)
 print(ll)
-partition(ll, 5)
+partition(ll, 1)
 print(ll)
