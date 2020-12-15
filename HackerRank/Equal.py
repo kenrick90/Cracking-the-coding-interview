@@ -1,56 +1,34 @@
 # https://www.hackerrank.com/challenges/equal/problem
 
-def determineOperation(diff):
-	if diff >= 5:
-		return 5
-	if diff >= 2:
-		return 2
-	return 1
+memo={}
+
+def determineOperations(diff):
+	if diff in memo:
+		return memo[diff]
+	operation=0
+	operation += diff // 5
+	remainder = diff % 5
+	operation += remainder // 2
+	remainder = remainder % 2
+	operation += remainder
+	memo[diff] = operation
+	return operation
+
+def numberOfOperations(arr, n, minimum):
+	operations = 0
+	for i in range(n):
+		operations += determineOperations(arr[i]-minimum)
+	return operations
 
 def minOperationEqual(arr,n):
-	secondMaximum = maximum = minimum = arr[0]
-	secondmaxIndex = maxIndex = minIndex = 0
-
-	for i in range(n):
-		if arr[i] > maximum:
-			secondmaxIndex = maxIndex
-			secondMaximum = maximum
-			maxIndex = i
-			maximum = arr[i]
-			continue
-
-		if arr[i] > secondMaximum:
-			secondmaxIndex = i
-			secondMaximum = arr[i]
-			continue
-
-		if arr[i] < minimum:
-			minIndex = i
-			minimum = arr[i]
-			continue
-
+	arr.sort(reverse=True)
 	operation = 0
-	#maximum = 3 maxIndex = 2
-	#minimum = 2 minIndex = 0
-	#operation = 1
-	# print(maximum,secondMaximum,minimum)
-
-	while maximum != minimum:
-
-		# print(maximum,maxIndex)
-		arr[maxIndex] -= determineOperation(maximum - minimum)
-		operation += 1
-		#case 1
-		if arr[maxIndex] < secondMaximum:
-			prevSecondMaxIndex = secondmaxIndex
-			prevSecondMaximum = secondMaximum
-			secondmaxIndex = maxIndex
-			secondMaximum = arr[maxIndex]
-			maxIndex = prevSecondMaxIndex
-			maximum = prevSecondMaximum
-		else:
-			maximum = arr[maxIndex]
-	return operation
+	min1 = arr[n-1]
+	min2 = min1 - 1
+	min3 = min2 - 1
+	min4 = min3 - 1
+	min5 = min4 - 1
+	return min(numberOfOperations(arr,n,min1), numberOfOperations(arr,n,min2), numberOfOperations(arr,n,min3), numberOfOperations(arr,n,min4), numberOfOperations(arr,n,min5))
 
 
 if __name__ == "__main__":
