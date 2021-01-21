@@ -43,9 +43,6 @@ def timeInWords(h, m):
     if m >=40:
         return unit_number[60-m] + " minutes to " + unit_number[(int(h)+1)%12]
 
-
-          
-    
         
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
