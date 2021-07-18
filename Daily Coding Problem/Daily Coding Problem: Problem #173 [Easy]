@@ -1,0 +1,29 @@
+
+
+
+
+def flatten(d, parent_key=''):
+    items = []
+    for k , v in d.items():
+        nk = parent_key + "." + k if parent_key else k
+        if type(v) is not dict:
+            items.append((nk,v))
+        else:
+            items.extend(flatten(v, nk).items())
+    return dict(items)
+
+if __name__=="__main__":
+
+    d={
+    "key": 3,
+    "foo": {
+        "a": 5,
+        "bar": {
+            "baz": 8
+        }
+    }
+    }
+
+    # d={"foo":{"bar":{"baz":8}}}
+    print(flatten(d , ""))
+
