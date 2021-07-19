@@ -1,0 +1,24 @@
+from collections import defaultdict
+def longestSubArray(arr,l):
+    ans = 0
+    i,j=0,0
+
+    index=defaultdict(lambda :0)
+    index[arr[j]] = 1
+    while i < n-1 and j < n:
+        if index[arr[i]] <=1 and index[arr[j]] <= 1:
+            ans = max(ans, j - i + 1)
+        if index[arr[j]] == 2:
+            index[arr[i]] -=1
+            i+=1
+        else:
+            j+=1
+            if j != n:
+                index[arr[j]] += 1
+    return ans
+
+
+
+arr = [5, 1,5, 3, 5, 2,5,3, 4, 1 , 1 , 1 , 1]
+n = len(arr)
+print(longestSubArray(arr,n))
