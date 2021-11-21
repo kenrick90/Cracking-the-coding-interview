@@ -1,0 +1,27 @@
+#https://leetcode.com/problems/maximal-square/submissions/
+
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        #m is height
+        m = len(matrix)
+        #n is length
+        n = len(matrix[0])
+        
+        
+        maxlength = 0
+        for i in range(m):
+            for j in range(n):
+                if i == 0 or j == 0:
+                    maxlength = max(int(matrix[i][j]),maxlength)
+                    
+                elif matrix[i][j] == "0":
+                    matrix[i][j] = 0
+    
+                elif matrix[i][j] == "1":
+                    matrix[i][j] = int(matrix[i][j]) + min (int(matrix[i][j-1]), int(matrix[i-1][j-1]),int(matrix[i-1][j]))
+                    maxlength = max(int(matrix[i][j]), maxlength)
+        return maxlength * maxlength
+                
+        
+        
+        
